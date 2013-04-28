@@ -1,0 +1,14 @@
+[core]
+	excludesfile = /Users/davidyoshikawa/Workspaces/Git/.gitignore
+	editor = /usr/bin/emacs
+[user]
+	name = David Yoshikawa
+	email = 
+[color]
+	ui = auto
+[alias]
+	co = checkout
+	ci = commit
+	br = branch
+	logg = log --graph --decorate --oneline --abbrev-commit --all
+	difff = diff --color-words
