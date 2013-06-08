@@ -1,3 +1,33 @@
-# Emacs
+# IGNORE NOISE FROM...
+
+# EMACS
 *~
 *.*~
+
+# XCODE 3 (and older)
+*.pbxuser
+*.mode1
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcclassmodel/
+
+# XCODE 4
+xcuserdata/
+
+# XCODE (build products)
+*.build/
+build/
+DerivedData/
+
+# SVN
+.svn
+
+# CVS
+CVS/
+.cvsignore
+*/.cvsignore
+
+# OSX
+.DS_Store
+profile
