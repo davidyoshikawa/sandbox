@@ -42,6 +42,10 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     // Dismiss the keyboard (on 'return' button touch - as delegate behavior) - NOTE: electing to use method-specific parameter
     [textField resignFirstResponder];
+    
+    // Update label (on 'return' button touch - with delegate reported parameter)
+    [self updateLabel:textField];
+    
     return YES;
 }
 
