@@ -17,7 +17,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+
+    // Show an alert (example) after view loads (only shows on new startup of app - not revival from background state)
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Alert Title"
+                          message:@"Here is my alert message."
+                          delegate:nil
+                          cancelButtonTitle:@"Okay"
+                          otherButtonTitles:nil];
+    [alert show];
 }
 
 - (void)didReceiveMemoryWarning
