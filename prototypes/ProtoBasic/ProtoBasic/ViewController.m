@@ -29,6 +29,14 @@
 - (IBAction)updateLabel:(id)sender {
     NSString *labelText = [[NSString alloc] initWithFormat:@"Hi %@", [_textField text]];
     [_label setText:labelText];
+    
+    // Dismiss the keyboard (on 'submit' button touch)
+    [_textField resignFirstResponder];
+}
+
+- (IBAction)dismissKeyboard:(id)sender {
+    // Dismiss the keyboard (on off-target touch via custom button in background)
+    [_textField resignFirstResponder];
 }
 
 @end

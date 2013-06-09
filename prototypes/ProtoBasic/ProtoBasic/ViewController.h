@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *label;
 
 - (IBAction)updateLabel:(id)sender;
+- (IBAction)dismissKeyboard:(id)sender;
 
 @end
