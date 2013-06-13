@@ -13,6 +13,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *label;
 
+// Holds data from 'data.plist'.
+@property (strong, nonatomic) NSMutableDictionary *dataDictionary;
+
 - (IBAction)updateLabel:(id)sender;
 - (IBAction)dismissKeyboard:(id)sender;
 

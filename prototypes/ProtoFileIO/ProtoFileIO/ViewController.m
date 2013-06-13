@@ -17,7 +17,37 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+
+    /**
+     * Assign contents of 'data.plist' to a mutable dictionary (for use in persisting entries from the UI).
+     *
+     * - Create (through Xcode) a new plist ('data.plist')
+     *   -- Create by right-clicking top level and adding new plist file to group and target of ProtoFileIO.
+     *   -- Populate with data as desired (through Xcode).
+     * - Get reference to this view controller's bundle.
+     * - Get (with the bundle) the path to our plist.
+     * - Initialize our dictionary from the plist.
+     */
+    NSString *path;
+    
+    NSBundle *vcBundle = [NSBundle bundleForClass:[self class]];
+    if ((path = [vcBundle pathForResource:@"data" ofType:@"plist"]))  {
+        _dataDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+    }
+    
+    // Test for data from the plist.
+    NSString *testField = [_dataDictionary objectForKey:@"testfield"];
+    if (![@"cool" isEqualToString:testField]) {
+        UIAlertView *testFieldAlert = [[UIAlertView alloc]
+                                       initWithTitle:@"data.plist"
+                                       message:@"Failed to find the 'testfield' in our plist"
+                                       delegate:nil
+                                       cancelButtonTitle:@"Okay"
+                                       otherButtonTitles:nil];
+        [testFieldAlert show];
+    }
+    
+    NSLog(@"Found: %@", [_dataDictionary objectForKey:@"testfield"]);
 }
 
 - (void)didReceiveMemoryWarning
