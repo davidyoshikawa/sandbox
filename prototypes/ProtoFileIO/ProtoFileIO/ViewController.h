@@ -12,8 +12,11 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *label;
+@property (weak, nonatomic) IBOutlet UILabel *labelFromPlist;
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 
 // Holds data from 'data.plist'.
+@property (strong, nonatomic) NSString *dataDictionaryPath;
 @property (strong, nonatomic) NSMutableDictionary *dataDictionary;
 
 - (IBAction)updateLabel:(id)sender;

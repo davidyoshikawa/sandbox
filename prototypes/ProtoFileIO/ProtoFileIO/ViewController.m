@@ -28,19 +28,17 @@
      * - Get (with the bundle) the path to our plist.
      * - Initialize our dictionary from the plist.
      */
-    NSString *path;
-    
     NSBundle *vcBundle = [NSBundle bundleForClass:[self class]];
-    if ((path = [vcBundle pathForResource:@"data" ofType:@"plist"]))  {
-        _dataDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+    if ((_dataDictionaryPath = [vcBundle pathForResource:@"data" ofType:@"plist"]))  {
+        _dataDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:_dataDictionaryPath];
     }
     
     // Test for data from the plist.
-    NSString *testField = [_dataDictionary objectForKey:@"testfield"];
+    NSString *testField = [_dataDictionary objectForKey:@"testField"];
     if (![@"cool" isEqualToString:testField]) {
         UIAlertView *testFieldAlert = [[UIAlertView alloc]
                                        initWithTitle:@"data.plist"
-                                       message:@"Failed to find the 'testfield' in our plist"
+                                       message:@"Failed to find the 'testField' in our plist"
                                        delegate:nil
                                        cancelButtonTitle:@"Okay"
                                        otherButtonTitles:nil];
@@ -57,9 +55,37 @@
 }
 
 - (IBAction)updateLabel:(id)sender {
-    NSString *labelText = [[NSString alloc] initWithFormat:@"Hi %@", [_textField text]];
-    [_label setText:labelText];
+
+    /**
+     * Updating the label(s) to demonstrate use of plist as a
+     * persistance mechanism.
+     *
+     * - Get label text from the text field (through submit).
+     * - Get date from the picker (and format).
+     * - Create a nice string to display and store.
+     * - Get text from the plist (show before updating).
+     * - Save new text into the plist for view on next update.
+     */
+    NSString *labelText = [_textField text];
+
+    // Add date from picker to the label text (in GMT).
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"dd MMM hh:mm a"];
+    [dateFormat setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    NSString *dateString = [dateFormat stringFromDate:[_datePicker date]];
+    NSString *datedLabel = [[NSString alloc] initWithFormat:@"%@ '%@'", dateString, labelText];
     
+    // Show upper (new) label directly from submitted text.
+    [_label setText:[[NSString alloc] initWithFormat:@"New: %@", datedLabel]];
+    
+    // Update lower (old) label directly from plist.
+    [_labelFromPlist setText:[[NSString alloc] initWithFormat:@"Old: %@", [_dataDictionary objectForKey:@"labelText"]]];
+    
+    // Persist the label text to the dictionary.
+    [_dataDictionary setObject:datedLabel forKey:@"labelText"];
+    [_dataDictionary writeToFile: _dataDictionaryPath atomically:YES];
+    NSLog(@"Wrote: %@", [_dataDictionary objectForKey:@"labelText"]);
+
     // Dismiss the keyboard (on 'submit' button touch)
     [_textField resignFirstResponder];
 }
