@@ -79,11 +79,11 @@ NSString * const kTestFieldValue          = @"cool";
      */
     NSString *submittedText = [_textField text];
 
-    // Add date from picker to the submitted text (in GMT).
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:kFavThingsDateFormat];
-    [dateFormat setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    NSString *dateString = [dateFormat stringFromDate:[_datePicker date]];
+    // Add date from picker to the submitted text (default local settings unless you uncomment GMT formatting below).
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:kFavThingsDateFormat];
+    // GMT // [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    NSString *dateString = [dateFormatter stringFromDate:[_datePicker date]];
     NSString *datedLabel = [[NSString alloc] initWithFormat:@"%@ '%@'", dateString, submittedText];
     
     // Show submitted text (upper label).
