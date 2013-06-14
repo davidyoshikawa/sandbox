@@ -45,7 +45,11 @@
         [testFieldAlert show];
     }
     
-    NSLog(@"Found: %@", [_dataDictionary objectForKey:@"testfield"]);
+    NSLog(@"Found: %@", [_dataDictionary objectForKey:@"testField"]);
+    
+    // Initialize and show current history (from plist).
+    _favThings = [_dataDictionary objectForKey:@"favThings"];
+    NSLog(@"Favorite things (%d favThings) loaded from data dictionary.", (!_favThings ? 0 : [_favThings count]));
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,34 +61,34 @@
 - (IBAction)updateLabel:(id)sender {
 
     /**
-     * Updating the label(s) to demonstrate use of plist as a
-     * persistance mechanism.
+     * Updating the label(s) to demonstrate use of plist as a persistance mechanism.
      *
-     * - Get label text from the text field (through submit).
+     * - Get submitted text from the text field.
      * - Get date from the picker (and format).
      * - Create a nice string to display and store.
-     * - Get text from the plist (show before updating).
-     * - Save new text into the plist for view on next update.
+     * - Get text from the plist (show history before updating).
+     * - Save new text into the plist (in array) for view on next update.
      */
-    NSString *labelText = [_textField text];
+    NSString *submittedText = [_textField text];
 
-    // Add date from picker to the label text (in GMT).
+    // Add date from picker to the submitted text (in GMT).
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"dd MMM hh:mm a"];
     [dateFormat setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     NSString *dateString = [dateFormat stringFromDate:[_datePicker date]];
-    NSString *datedLabel = [[NSString alloc] initWithFormat:@"%@ '%@'", dateString, labelText];
+    NSString *datedLabel = [[NSString alloc] initWithFormat:@"%@ '%@'", dateString, submittedText];
     
-    // Show upper (new) label directly from submitted text.
+    // Show submitted text (upper label).
     [_label setText:[[NSString alloc] initWithFormat:@"New: %@", datedLabel]];
     
-    // Update lower (old) label directly from plist.
-    [_labelFromPlist setText:[[NSString alloc] initWithFormat:@"Old: %@", [_dataDictionary objectForKey:@"labelText"]]];
+    // Show history of text (lower label) gathered from the plist.
+    NSString *favThingsForDisplay = [_favThings componentsJoinedByString:@"\n"];
+    [_textView setText:favThingsForDisplay];
     
-    // Persist the label text to the dictionary.
-    [_dataDictionary setObject:datedLabel forKey:@"labelText"];
+    // Persist the label text to the dictionary (newest entries at the front).
+    [_favThings insertObject:datedLabel atIndex:0];
+    [_dataDictionary setObject:_favThings forKey:@"favThings"];
     [_dataDictionary writeToFile: _dataDictionaryPath atomically:YES];
-    NSLog(@"Wrote: %@", [_dataDictionary objectForKey:@"labelText"]);
 
     // Dismiss the keyboard (on 'submit' button touch)
     [_textField resignFirstResponder];

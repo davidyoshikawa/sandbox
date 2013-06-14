@@ -4,7 +4,7 @@
 <dict>
 	<key>testField</key>
 	<string>cool</string>
-	<key>labelText</key>
-	<string></string>
+	<key>favThings</key>
+	<array/>
 </dict>
 </plist>
