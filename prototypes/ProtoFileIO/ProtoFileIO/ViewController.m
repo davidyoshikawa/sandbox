@@ -8,6 +8,14 @@
 
 #import "ViewController.h"
 
+// Constants used to identify plist-related data.
+NSString * const kDataPlistName           = @"data";
+NSString * const kDataPlistType           = @"plist";
+NSString * const kFavThingsDateFormat     = @"dd MMM hh:mm a";
+NSString * const kFavThingsKey            = @"favThings";
+NSString * const kTestFieldKey            = @"testField";
+NSString * const kTestFieldValue          = @"cool";
+
 @interface ViewController ()
 
 @end
@@ -29,15 +37,15 @@
      * - Initialize our dictionary from the plist.
      */
     NSBundle *vcBundle = [NSBundle bundleForClass:[self class]];
-    if ((_dataDictionaryPath = [vcBundle pathForResource:@"data" ofType:@"plist"]))  {
+    if ((_dataDictionaryPath = [vcBundle pathForResource:kDataPlistName ofType:kDataPlistType]))  {
         _dataDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:_dataDictionaryPath];
     }
     
     // Test for data from the plist.
-    NSString *testField = [_dataDictionary objectForKey:@"testField"];
-    if (![@"cool" isEqualToString:testField]) {
+    NSString *testField = [_dataDictionary objectForKey:kTestFieldKey];
+    if (![kTestFieldValue isEqualToString:testField]) {
         UIAlertView *testFieldAlert = [[UIAlertView alloc]
-                                       initWithTitle:@"data.plist"
+                                       initWithTitle:[[NSString alloc] initWithFormat:@"%@.%@", kDataPlistName, kDataPlistType]
                                        message:@"Failed to find the 'testField' in our plist"
                                        delegate:nil
                                        cancelButtonTitle:@"Okay"
@@ -45,10 +53,10 @@
         [testFieldAlert show];
     }
     
-    NSLog(@"Found: %@", [_dataDictionary objectForKey:@"testField"]);
+    NSLog(@"Found: %@", testField);
     
     // Initialize and show current history (from plist).
-    _favThings = [_dataDictionary objectForKey:@"favThings"];
+    _favThings = [_dataDictionary objectForKey:kFavThingsKey];
     NSLog(@"Favorite things (%d favThings) loaded from data dictionary.", (!_favThings ? 0 : [_favThings count]));
 }
 
@@ -73,7 +81,7 @@
 
     // Add date from picker to the submitted text (in GMT).
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"dd MMM hh:mm a"];
+    [dateFormat setDateFormat:kFavThingsDateFormat];
     [dateFormat setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     NSString *dateString = [dateFormat stringFromDate:[_datePicker date]];
     NSString *datedLabel = [[NSString alloc] initWithFormat:@"%@ '%@'", dateString, submittedText];
@@ -87,7 +95,7 @@
     
     // Persist the label text to the dictionary (newest entries at the front).
     [_favThings insertObject:datedLabel atIndex:0];
-    [_dataDictionary setObject:_favThings forKey:@"favThings"];
+    [_dataDictionary setObject:_favThings forKey:kFavThingsKey];
     [_dataDictionary writeToFile: _dataDictionaryPath atomically:YES];
 
     // Dismiss the keyboard (on 'submit' button touch)
