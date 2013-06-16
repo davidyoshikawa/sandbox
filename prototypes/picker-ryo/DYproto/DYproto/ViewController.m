@@ -39,37 +39,39 @@ int        const kNumColsWeightPicker         = 1;
     // Log data from initialization.
     _minWeight = [_dataDictionary objectForKey:kMinWeightKey];
     _maxWeight = [_dataDictionary objectForKey:kMaxWeightKey];
-    //_weightInTenths = [_dataDictionary objectForKey:kWeightInTenthsKey];
+    _weightInTenths = [[_dataDictionary objectForKey:kWeightInTenthsKey] boolValue];
     _weights = [_dataDictionary objectForKey:kWeightsKey];
 
     NSLog(@"Initialized:"
           "\n  '%@' (%@)"
           "\n  '%@' (%@)"
-          //"\n  '%@' (%d)"
+          "\n  '%@' (%d)"
           "\n  '%@' (%d items)",
           kMinWeightKey, _minWeight,
           kMaxWeightKey, _maxWeight,
-          //kWeightInTenthsKey, _weightInTenths ,
+          kWeightInTenthsKey, _weightInTenths ,
           kWeightsKey, (!_weights ? 0 : [_weights count]));
     
     /**
-     * Calculate the number of rows the weight picker will contain.
-     */
-//    _numWeightsOnPicker = (NSInteger *)(([_maxWeight intValue] - [_minWeight intValue]) * [_weightInTenths intValue]);
-    
-    /**
-     * Initialize the picker values.
+     * Initialize the picker values (num = (max-min) * 10 if by tenths).
      */
     _weightPickerChoices = [[NSMutableArray alloc] init];
 
     for (int i=[_minWeight intValue]; i<=[_maxWeight intValue]; i++) {
         [_weightPickerChoices addObject:[[NSString alloc] initWithFormat:@"%d", i]];
+
+        if (_weightInTenths) {
+            for (int j=1; j<10; j++) {
+                [_weightPickerChoices addObject:[[NSString alloc] initWithFormat:@"%d.%d", i, j]];
+            }
+        }
     }
-    
-    NSLog(@"Weight picker now has %d choices.", [_weightPickerChoices count]);
+
+    NSLog(@"Weight picker populated from %@ to %@ %@.", _minWeight, _maxWeight, (_weightInTenths ? @"(by tenths)" : @""));
     
     /**
      * Update the label for default row in picker.
+     * -- TODO: eventually make this default to the latest entry in history (and make picker match).
      */
     [self updateLabel:0];
 }
@@ -87,14 +89,24 @@ int        const kNumColsWeightPicker         = 1;
 
 /** ***** UIPickerViewDataSource ***** */
 
-// Returns the # of columns in picker.
+// Returns the # of columns (components) in picker.
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return kNumColsWeightPicker;
 }
 
-// Returns the # of rows in each component.
+// Returns the # of rows in each column (component).
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return [_weightPickerChoices count]; //_numWeightsOnPicker;
+    int numRows = 0;
+    
+    switch (component) {
+        case 0:
+            numRows = [_weightPickerChoices count];
+            break;
+        default:
+            break;
+    }
+
+    return numRows;
 }
 
 /** ***** UIPickerViewDelegate ***** */

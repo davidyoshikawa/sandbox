@@ -18,12 +18,9 @@
 @property (strong, nonatomic) NSMutableDictionary *dataDictionary;
 @property (strong, nonatomic) NSNumber *minWeight;
 @property (strong, nonatomic) NSNumber *maxWeight;
-//@property (strong, nonatomic) Boolean *weightInTenths;
+@property (assign)            BOOL weightInTenths;
 @property (strong, nonatomic) NSMutableArray *weights;
 @property (strong, nonatomic) NSMutableArray *weightPickerChoices;
-
-// Holds calculated data.
-//@property (strong, nonatomic) NSInteger *numWeightsOnPicker;
 
 -(void)updateLabel:(int)row;
 
