@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -14,8 +14,8 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ta-HK-Tsv">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="320" id="Niu-HE-BAr"/>
-                                    <constraint firstAttribute="height" constant="549" id="ZhM-pD-T2e"/>
+                                    <constraint firstAttribute="width" constant="320" id="1r8-OL-7J0"/>
+                                    <constraint firstAttribute="height" constant="549" id="VRR-qH-2Wh"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal">
@@ -53,16 +53,6 @@
                                     <outlet property="delegate" destination="2" id="0jD-ro-309"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Slc-iO-8Bq">
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3FK-VZ-DsN">
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RKq-eo-RpM">
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Submit">
@@ -73,57 +63,65 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="changeLabel:" destination="2" eventType="touchUpInside" id="3xk-Og-QUB"/>
+                                    <action selector="updateLabel:" destination="2" eventType="touchUpInside" id="OPN-dy-xHT"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wXc-GS-cmG">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="XFP-UF-s07"/>
+                                    <constraint firstAttribute="height" constant="30" id="LyN-n3-0xC"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SgX-N9-GkN">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BTp-AE-a0e">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="216" id="F9c-24-Bsq"/>
+                                    <constraint firstAttribute="height" constant="30" id="fKJ-u8-m9V"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uga-71-lsH">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="216" id="9Zn-iI-Pm3"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="dataSource" destination="2" id="yos-f0-4ip"/>
-                                    <outlet property="delegate" destination="2" id="VSY-Qt-uno"/>
+                                    <outlet property="dataSource" destination="2" id="m5l-JJ-G9L"/>
+                                    <outlet property="delegate" destination="2" id="Tn4-gF-yto"/>
                                 </connections>
                             </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="BTp-AE-a0e" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="0Fe-D2-DWs"/>
+                            <constraint firstItem="uga-71-lsH" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="2Ef-64-VAA"/>
                             <constraint firstItem="wXc-GS-cmG" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="2OF-XH-ygT"/>
-                            <constraint firstItem="0Ta-HK-Tsv" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="-1" id="3Xd-WN-wph"/>
-                            <constraint firstItem="3FK-VZ-DsN" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="6Kg-y9-DcT"/>
-                            <constraint firstAttribute="trailing" secondItem="SgX-N9-GkN" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="6MD-Nb-gHl"/>
-                            <constraint firstItem="FtS-aP-0Pz" firstAttribute="top" secondItem="3" secondAttribute="top" constant="102" id="8EH-bq-2Ch"/>
+                            <constraint firstItem="FtS-aP-0Pz" firstAttribute="top" secondItem="3" secondAttribute="top" constant="79" id="5Tb-L5-uUq"/>
                             <constraint firstItem="0Ta-HK-Tsv" firstAttribute="bottom" secondItem="3" secondAttribute="bottom" type="default" id="B1v-Ea-VT9"/>
-                            <constraint firstItem="Slc-iO-8Bq" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="Eg7-TW-tdN"/>
-                            <constraint firstItem="RKq-eo-RpM" firstAttribute="centerX" secondItem="wXc-GS-cmG" secondAttribute="centerX" type="default" id="JUG-4Y-n7K"/>
+                            <constraint firstItem="0Ta-HK-Tsv" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="-1" id="GDq-Ff-do7"/>
                             <constraint firstItem="OUf-hE-uBj" firstAttribute="top" secondItem="Tkg-2C-9nt" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="KP3-Vn-5zK"/>
-                            <constraint firstItem="SgX-N9-GkN" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="Sjf-9w-Ygv"/>
+                            <constraint firstAttribute="trailing" secondItem="BTp-AE-a0e" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="QMY-ud-l5J"/>
+                            <constraint firstItem="uga-71-lsH" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="QVG-rs-Rbl"/>
                             <constraint firstItem="Tkg-2C-9nt" firstAttribute="top" secondItem="3" secondAttribute="top" constant="20" symbolic="YES" type="default" id="UHo-l6-iIU"/>
-                            <constraint firstItem="wXc-GS-cmG" firstAttribute="top" secondItem="3" secondAttribute="top" constant="147" id="aan-u6-mCz"/>
-                            <constraint firstItem="RKq-eo-RpM" firstAttribute="top" secondItem="wXc-GS-cmG" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="bPa-0o-8WE"/>
-                            <constraint firstItem="3FK-VZ-DsN" firstAttribute="top" secondItem="Slc-iO-8Bq" secondAttribute="top" type="default" id="crs-ee-7ha"/>
+                            <constraint firstItem="uga-71-lsH" firstAttribute="bottom" secondItem="3" secondAttribute="bottom" type="default" id="VIU-zy-IrN"/>
+                            <constraint firstItem="BTp-AE-a0e" firstAttribute="centerX" secondItem="RKq-eo-RpM" secondAttribute="centerX" type="default" id="Z75-Ta-gz8"/>
+                            <constraint firstItem="wXc-GS-cmG" firstAttribute="top" secondItem="FtS-aP-0Pz" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="c6I-ho-2DY"/>
                             <constraint firstAttribute="trailing" secondItem="FtS-aP-0Pz" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="eoo-Ng-cR6"/>
-                            <constraint firstItem="OUf-hE-uBj" firstAttribute="centerX" secondItem="0Ta-HK-Tsv" secondAttribute="centerX" type="default" id="fU4-Yi-JVu"/>
                             <constraint firstItem="FtS-aP-0Pz" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="kH2-t3-Gcd"/>
-                            <constraint firstAttribute="bottom" secondItem="SgX-N9-GkN" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="p2K-Fw-fo2"/>
                             <constraint firstAttribute="trailing" secondItem="wXc-GS-cmG" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="q3c-5u-xup"/>
+                            <constraint firstItem="RKq-eo-RpM" firstAttribute="top" secondItem="BTp-AE-a0e" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="qH3-As-IpH"/>
                             <constraint firstAttribute="trailing" secondItem="Tkg-2C-9nt" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="rPT-2M-A7P"/>
                             <constraint firstItem="Tkg-2C-9nt" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="swH-JN-rCg"/>
-                            <constraint firstItem="Slc-iO-8Bq" firstAttribute="top" secondItem="3" secondAttribute="top" constant="153" id="uV3-c4-ycE"/>
+                            <constraint firstItem="BTp-AE-a0e" firstAttribute="top" secondItem="wXc-GS-cmG" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="wzB-gM-UxP"/>
+                            <constraint firstItem="0Ta-HK-Tsv" firstAttribute="centerX" secondItem="OUf-hE-uBj" secondAttribute="centerX" type="default" id="yOx-AW-iVW"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="runningWeightRecord" destination="wXc-GS-cmG" id="RuB-l8-Ol0"/>
+                        <outlet property="recentWeightEntry" destination="wXc-GS-cmG" id="REr-K8-GZR"/>
                         <outlet property="weightEntry" destination="FtS-aP-0Pz" id="OoS-Rt-T1W"/>
-                        <outlet property="weightPickerView" destination="SgX-N9-GkN" id="1TO-Nm-1UL"/>
+                        <outlet property="weightHistory" destination="BTp-AE-a0e" id="JOg-yc-nZI"/>
+                        <outlet property="weightPickerView" destination="uga-71-lsH" id="SPo-Iv-HaT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
@@ -137,10 +135,11 @@
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
-                <relationship kind="action" name="changeLabel:"/>
                 <relationship kind="action" name="dismissKeyboard:"/>
-                <relationship kind="outlet" name="runningWeightRecord" candidateClass="UILabel"/>
+                <relationship kind="action" name="updateLabel:"/>
+                <relationship kind="outlet" name="recentWeightEntry" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="weightEntry" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="weightHistory" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="weightPickerView" candidateClass="UIPickerView"/>
             </relationships>
         </class>

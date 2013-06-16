@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		791A45D4176BA5FA00E5D0D3 /* data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 791A45D3176BA5FA00E5D0D3 /* data.plist */; };
+		791A45D6176BBE1600E5D0D3 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 791A45D5176BBE1600E5D0D3 /* README.txt */; };
 		79B4B558175FF93E00F1670E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B4B557175FF93E00F1670E /* UIKit.framework */; };
 		79B4B55A175FF93E00F1670E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B4B559175FF93E00F1670E /* Foundation.framework */; };
 		79B4B55C175FF93E00F1670E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B4B55B175FF93E00F1670E /* CoreGraphics.framework */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		791A45D3176BA5FA00E5D0D3 /* data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = data.plist; sourceTree = "<group>"; };
+		791A45D5176BBE1600E5D0D3 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		79B4B554175FF93E00F1670E /* MiddleWeight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiddleWeight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79B4B557175FF93E00F1670E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		79B4B559175FF93E00F1670E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -56,6 +60,8 @@
 		79B4B54B175FF93E00F1670E = {
 			isa = PBXGroup;
 			children = (
+				791A45D5176BBE1600E5D0D3 /* README.txt */,
+				791A45D3176BA5FA00E5D0D3 /* data.plist */,
 				79B4B55D175FF93F00F1670E /* MiddleWeight */,
 				79B4B556175FF93E00F1670E /* Frameworks */,
 				79B4B555175FF93E00F1670E /* Products */,
@@ -163,6 +169,8 @@
 				79B4B56C175FF93F00F1670E /* Default@2x.png in Resources */,
 				79B4B56E175FF93F00F1670E /* Default-568h@2x.png in Resources */,
 				79B4B571175FF93F00F1670E /* MainStoryboard.storyboard in Resources */,
+				791A45D4176BA5FA00E5D0D3 /* data.plist in Resources */,
+				791A45D6176BBE1600E5D0D3 /* README.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +306,7 @@
 				79B4B579175FF93F00F1670E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

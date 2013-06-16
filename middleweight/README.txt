@@ -1,0 +1,1 @@
+This simple application displays some basic functionality.  The application takes user input from a text field, displays that input in a label, saves that same input into a plist, and then reads from the plist to show you past user input in another label.  This application demonstrates basic uses of the NSBundle, NSMutableDictionary, NSString, and UIAlertView classes.  
