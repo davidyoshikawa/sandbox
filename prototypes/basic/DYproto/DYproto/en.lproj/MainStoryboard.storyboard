@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="5">
+            <objects>
+                <viewController id="2" customClass="ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9o-Ns-9Hx">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="dismissKeyboard:" destination="2" eventType="touchUpInside" id="3Tm-OV-VTA"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IsH-5b-s16">
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ueL-SN-MJq">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="baY-CO-IMo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sc4-AD-ha1">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="enter">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="updateLabel:" destination="2" eventType="touchUpInside" id="Zne-WB-AVc"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="b9o-Ns-9Hx" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="2ec-kC-yjb"/>
+                            <constraint firstItem="ueL-SN-MJq" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="3so-Iq-Aqx"/>
+                            <constraint firstItem="IsH-5b-s16" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="74H-Md-kVr"/>
+                            <constraint firstItem="sc4-AD-ha1" firstAttribute="centerX" secondItem="ueL-SN-MJq" secondAttribute="centerX" type="default" id="9Vx-mD-0d4"/>
+                            <constraint firstItem="sc4-AD-ha1" firstAttribute="top" secondItem="3" secondAttribute="top" constant="136" id="L6W-zJ-9c8"/>
+                            <constraint firstItem="ueL-SN-MJq" firstAttribute="top" secondItem="3" secondAttribute="top" constant="68" id="PCN-6e-cIC"/>
+                            <constraint firstItem="b9o-Ns-9Hx" firstAttribute="top" secondItem="3" secondAttribute="top" type="default" id="XnL-rM-W3a"/>
+                            <constraint firstAttribute="trailing" secondItem="IsH-5b-s16" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="ee7-XC-jEV"/>
+                            <constraint firstItem="b9o-Ns-9Hx" firstAttribute="centerY" secondItem="3" secondAttribute="centerY" type="default" id="nch-XS-BVI"/>
+                            <constraint firstItem="b9o-Ns-9Hx" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="tQt-CP-Eyq"/>
+                            <constraint firstItem="IsH-5b-s16" firstAttribute="top" secondItem="3" secondAttribute="top" constant="20" symbolic="YES" type="default" id="wMF-Hx-RMx"/>
+                            <constraint firstAttribute="trailing" secondItem="ueL-SN-MJq" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="yo0-r1-m2M"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="label" destination="ueL-SN-MJq" id="f64-hk-mwG"/>
+                        <outlet property="textField" destination="IsH-5b-s16" id="qvZ-6J-Xjm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+    <classes>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="ViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="dismissKeyboard:"/>
+                <relationship kind="action" name="updateLabel:"/>
+                <relationship kind="outlet" name="label" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="textField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+    </classes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
