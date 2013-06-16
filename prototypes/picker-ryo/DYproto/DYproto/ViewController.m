@@ -11,12 +11,17 @@
 // Constants used to identify plist-related data.
 NSString * const kDataPlistName               = @"data";
 NSString * const kDataPlistType               = @"plist";
-NSString * const kFavThingsDateFormat         = @"dd MMM hh:mm a";
+NSString * const kDateFormat                  = @"dd MMM yyyy";
 NSString * const kMinWeightKey                = @"minWeight";
 NSString * const kMaxWeightKey                = @"maxWeight";
 NSString * const kWeightInTenthsKey           = @"weightInTenths";
 NSString * const kWeightsKey                  = @"weights";
-int        const kNumColsWeightPicker         = 1;
+NSString * const kDatesKey                    = @"dates";
+int        const kNumColsWeightPicker         = 2;
+int        const kWeightPickerComponent       = 0;
+int        const kDatePickerComponent         = 1;
+int        const kWeightComponentWidth        = 100;
+int        const kDateComponentWidth          = 150;
 
 @interface ViewController ()
 
@@ -41,6 +46,7 @@ int        const kNumColsWeightPicker         = 1;
     _maxWeight = [_dataDictionary objectForKey:kMaxWeightKey];
     _weightInTenths = [[_dataDictionary objectForKey:kWeightInTenthsKey] boolValue];
     _weights = [_dataDictionary objectForKey:kWeightsKey];
+    _dates = [_dataDictionary objectForKey:kDatesKey];
 
     NSLog(@"Initialized:"
           "\n  '%@' (%@)"
@@ -53,7 +59,8 @@ int        const kNumColsWeightPicker         = 1;
           kWeightsKey, (!_weights ? 0 : [_weights count]));
     
     /**
-     * Initialize the picker values (num = (max-min) * 10 if by tenths).
+     * Initialize the picker values.
+     * -- Weights (num = (max-min) * 10 if by tenths)
      */
     _weightPickerChoices = [[NSMutableArray alloc] init];
 
@@ -68,12 +75,24 @@ int        const kNumColsWeightPicker         = 1;
     }
 
     NSLog(@"Weight picker populated from %@ to %@ %@.", _minWeight, _maxWeight, (_weightInTenths ? @"(by tenths)" : @""));
+
+    /**
+     * Initialize the picker values.
+     * -- Dates (start date to now by days)
+     */
+    _datePickerChoices = [[NSMutableArray alloc] init];
+
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:kDateFormat];
+    // TODO: fix this so we have a starting date in plist and populate with dates until present (then add call back by date).
+    NSString *dateString = [dateFormatter stringFromDate:[[NSDate alloc] initWithTimeIntervalSinceNow:0]];
+    [_datePickerChoices addObject:[[NSString alloc] initWithString:dateString]];
     
     /**
      * Update the label for default row in picker.
      * -- TODO: eventually make this default to the latest entry in history (and make picker match).
      */
-    [self updateLabel:0];
+    [self updateLabelForWeight:0 andDate:0];
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,9 +101,9 @@ int        const kNumColsWeightPicker         = 1;
     // Dispose of any resources that can be recreated.
 }
 
-- (void)updateLabel:(int)row {
+- (void)updateLabelForWeight:(int)weightRow andDate:(int)dateRow {
     // Update label ('picker' choice made).
-    [_label setText:[[NSString alloc] initWithFormat:@"The scale reads %@ lbs.", [_weightPickerChoices objectAtIndex:row]]];
+    [_label setText:[[NSString alloc] initWithFormat:@"%@ lbs on %@.", [_weightPickerChoices objectAtIndex:weightRow], [_datePickerChoices objectAtIndex:dateRow]]];
 }
 
 /** ***** UIPickerViewDataSource ***** */
@@ -99,8 +118,11 @@ int        const kNumColsWeightPicker         = 1;
     int numRows = 0;
     
     switch (component) {
-        case 0:
+        case kWeightPickerComponent:
             numRows = [_weightPickerChoices count];
+            break;
+        case kDatePickerComponent:
+            numRows = [_datePickerChoices count];
             break;
         default:
             break;
@@ -123,7 +145,11 @@ int        const kNumColsWeightPicker         = 1;
 
 // Acts on picker row selection.
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    [self updateLabel:row];
+    
+    int weightRow = [pickerView selectedRowInComponent:kWeightPickerComponent];
+    int dateRow = [pickerView selectedRowInComponent:kDatePickerComponent];
+
+    [self updateLabelForWeight:weightRow andDate:dateRow];
 }
 
 // Returns width of the column (component related to kNumColsWeightPicker starting at zero).
@@ -132,9 +158,11 @@ int        const kNumColsWeightPicker         = 1;
     float colWidth = 0;
     
     switch (component) {
-        case 0:
+        case kWeightPickerComponent:
             colWidth = 100;
             break;
+        case kDatePickerComponent:
+            colWidth = 150;
         default:
             break;
     }

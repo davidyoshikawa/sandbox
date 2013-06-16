@@ -21,7 +21,9 @@
 @property (assign)            BOOL weightInTenths;
 @property (strong, nonatomic) NSMutableArray *weights;
 @property (strong, nonatomic) NSMutableArray *weightPickerChoices;
+@property (strong, nonatomic) NSMutableArray *dates;
+@property (strong, nonatomic) NSMutableArray *datePickerChoices;
 
--(void)updateLabel:(int)row;
+-(void)updateLabelForWeight:(int)weightRow andDate:(int)dateRow;
 
 @end
