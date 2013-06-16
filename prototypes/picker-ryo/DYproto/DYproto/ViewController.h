@@ -8,12 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController <UITextFieldDelegate>
+@interface ViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *label;
+@property (weak, nonatomic) IBOutlet UIPickerView *weightPicker;
 
-- (IBAction)updateLabel:(id)sender;
-- (IBAction)dismissKeyboard:(id)sender;
+// Holds data from 'data.plist' (weights, etc).
+@property (strong, nonatomic) NSString *dataDictionaryPath;
+@property (strong, nonatomic) NSMutableDictionary *dataDictionary;
+@property (strong, nonatomic) NSNumber *minWeight;
+@property (strong, nonatomic) NSNumber *maxWeight;
+//@property (strong, nonatomic) Boolean *weightInTenths;
+@property (strong, nonatomic) NSMutableArray *weights;
+@property (strong, nonatomic) NSMutableArray *weightPickerChoices;
+
+// Holds calculated data.
+//@property (strong, nonatomic) NSInteger *numWeightsOnPicker;
+
+-(void)updateLabel:(int)row;
 
 @end
