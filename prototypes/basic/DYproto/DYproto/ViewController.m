@@ -17,13 +17,32 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)updateLabel:(id)sender {
+    // Update label ('update' button touched).
+    [_label setText:[_textField text]];
+    
+    // Dismiss keyboard ('update' button touched).
+    [_textField resignFirstResponder];
+}
+
+- (IBAction)dismissKeyboard:(id)sender {
+    // Dismiss keyboard ('hidden' button touched).
+    [_textField resignFirstResponder];
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    // Update label ('return' button touched as UITextFieldDelegate).
+    [self updateLabel:textField];
+    
+    return YES;
 }
 
 @end
