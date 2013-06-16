@@ -15,14 +15,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *recentWeightEntry;
 @property (weak, nonatomic) IBOutlet UILabel *weightHistory;
 
-//Holds values for custom picker.
-@property (nonatomic, strong) NSArray *weightList;
-
 @property (strong, nonatomic) NSString *dataDictionaryPath;
 @property (strong, nonatomic) NSMutableDictionary *dataDictionary;
+@property (strong, nonatomic) NSArray *pickerWeights;
 
 - (IBAction)updateLabel:(id)sender;
-
 - (IBAction)dismissKeyboard:(id)sender;
 
 @end

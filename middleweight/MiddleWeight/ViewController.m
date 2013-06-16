@@ -14,54 +14,24 @@
 
 @implementation ViewController
 
-@synthesize weightEntry, recentWeightEntry, weightList, dataDictionaryPath, dataDictionary;
-
-
-// returns the number of 'columns' to display.
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView; {
-    return 1;
-}
-
-// returns the # of rows in each component..
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component; {
-    return [weightList count];
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component; {
-    return [weightList objectAtIndex:row];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    
-    //Get reference to this view controller's bundle.
-    NSBundle *vcBundle = [NSBundle bundleForClass:[self class]];
-    //Get (with the bundle) the path to the plist.
-    if ((dataDictionaryPath = [vcBundle pathForResource:@"data" ofType:@"plist"])) {
-        
-        //Initialize the dictionary with the data in the plist.
-        dataDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:dataDictionaryPath];
-        
-    }
-    
-    //Test for data from the plist.
-    NSString *testField = [dataDictionary objectForKey:@"weight1"];
-    if (![@"199" isEqualToString:testField]) {
-        
-        UIAlertView *testFieldAlert = [[UIAlertView alloc] initWithTitle:@"data.plist"
-            message:@"Failed to find the 'testField' in the plist" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
-        
-        [testFieldAlert show];
-        
-    }
-    
-    //Populate the weightHistory label from the pfile. - Still working on a better representation of the data.
-    [_weightHistory setText:[dataDictionary descriptionInStringsFileFormat]];
-    
-    weightList = [[NSArray alloc] initWithObjects:@"150",@"151",@"152",@"153",@"154", @"155", nil];
 
+    // Get reference to this view controller's bundle.
+    NSBundle *vcBundle = [NSBundle bundleForClass:[self class]];
+    // Get (with the bundle) the path to the plist.
+    if ((_dataDictionaryPath = [vcBundle pathForResource:@"data" ofType:@"plist"])) {
+        
+        // Initialize the dictionary with the data in the plist.
+        _dataDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:_dataDictionaryPath];
+    }
+    
+    // Populate the weightHistory label from the pfile.
+    // TODO: Still working on a better representation of the data.
+    [_weightHistory setText:[_dataDictionary descriptionInStringsFileFormat]];
+    
+    _pickerWeights = [[NSArray alloc] initWithObjects:@"150",@"151",@"152",@"153",@"154", @"155", nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,40 +42,53 @@
 
 - (IBAction)updateLabel:(id)sender {
     
-    //Create and format (recent) label display message.
-    NSString *message = [[NSString alloc] initWithFormat:@"Your weight is %@ pounds.", [weightEntry text]];
+    // Create and format (recent) label display message.
+    NSString *message = [[NSString alloc] initWithFormat:@"Weight (new): %@ lbs", [_weightEntry text]];
+    [_recentWeightEntry setText:message];
     
-    //Change the (recent) label to match current input.
-    [recentWeightEntry setText:message];
+    // Update the (history) label directly from plist.
+    [_weightHistory setText:[[NSString alloc] initWithFormat:@"Weight (old): %@ lbs", [_dataDictionary objectForKey:@"weight"]]];
     
-    //Update the (history) label directly from plist.
-    [_weightHistory setText:[[NSString alloc] initWithFormat:@"Old: %@", [dataDictionary objectForKey:@"weight4"]]];
+    // Persist the submitted weight to the dictionary.
+    [_dataDictionary setObject:[_weightEntry text] forKey:@"weight"];
+    [_dataDictionary writeToFile:_dataDictionaryPath atomically:YES];
+    NSLog(@"Wrote: %@", [_dataDictionary objectForKey:@"weight"]);
     
-    //Persist the label text to the dictionary.
-    [dataDictionary setObject:message forKey:@"weight4"];
-    [dataDictionary writeToFile:dataDictionaryPath atomically:YES];
-    NSLog(@"Wrote: %@", [dataDictionary objectForKey:@"weight4"]);
-    
-    //Dismiss the keyboard (on 'submit' button touch)
-    [weightEntry resignFirstResponder];
+    // Dismiss the keyboard (on 'submit' button touch)
+    [_weightEntry resignFirstResponder];
 }
 
 - (IBAction)dismissKeyboard:(id)sender {
     
-    //Dismiss the keyboard (on off-target touch via custom button in background)
-    [weightEntry resignFirstResponder];
-    
+    // Dismiss the keyboard (on off-target touch via custom button in background)
+    [_weightEntry resignFirstResponder];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
-    //Dismiss the keyboard (on 'return' button touch - as delegate behavior)
-    [weightEntry resignFirstResponder];
+    // Dismiss the keyboard (on 'return' button touch - as delegate behavior)
+    [textField resignFirstResponder];
     
-    //Update label (on 'return' button touch - with delegate reported parameter)
-    [self updateLabel:weightEntry];
+    // Update label (on 'return' button touch - with delegate reported parameter)
+    [self updateLabel:textField];
     
     return YES;
+}
+
+/** *********** Methods supporting the weight picker *********** */
+
+// Returns the number of 'columns' to display.
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView; {
+    return 1;
+}
+
+// Returns the # of rows in each component.
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component; {
+    return [_pickerWeights count];
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component; {
+    return [_pickerWeights objectAtIndex:row];
 }
 
 @end
