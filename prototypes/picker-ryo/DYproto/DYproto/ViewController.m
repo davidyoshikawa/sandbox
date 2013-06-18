@@ -17,6 +17,7 @@ NSString * const kMaxWeightKey                = @"maxWeight";
 NSString * const kWeightInTenthsKey           = @"weightInTenths";
 NSString * const kWeightsKey                  = @"weights";
 NSString * const kDatesKey                    = @"dates";
+NSString * const kStartDateKey                = @"startDate";
 int        const kNumColsWeightPicker         = 2;
 int        const kWeightPickerComponent       = 0;
 int        const kDatePickerComponent         = 1;
@@ -47,16 +48,21 @@ int        const kDateComponentWidth          = 150;
     _weightInTenths = [[_dataDictionary objectForKey:kWeightInTenthsKey] boolValue];
     _weights = [_dataDictionary objectForKey:kWeightsKey];
     _dates = [_dataDictionary objectForKey:kDatesKey];
+    _startDate = [_dataDictionary objectForKey:kStartDateKey];
 
     NSLog(@"Initialized:"
           "\n  '%@' (%@)"
           "\n  '%@' (%@)"
           "\n  '%@' (%d)"
+          "\n  '%@' (%d items)"
+          "\n  '%@' (%@)"
           "\n  '%@' (%d items)",
           kMinWeightKey, _minWeight,
           kMaxWeightKey, _maxWeight,
-          kWeightInTenthsKey, _weightInTenths ,
-          kWeightsKey, (!_weights ? 0 : [_weights count]));
+          kWeightInTenthsKey, _weightInTenths,
+          kWeightsKey, (!_weights ? 0 : [_weights count]),
+          kStartDateKey, _startDate,
+          kDatesKey, (!_dates ? 0 : [_dates count]));
     
     /**
      * Initialize the picker values.
@@ -82,12 +88,33 @@ int        const kDateComponentWidth          = 150;
      */
     _datePickerChoices = [[NSMutableArray alloc] init];
 
+    // Determine how many days passed from start date to today.
+    NSCalendar *gregorian = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+    NSUInteger units = NSDayCalendarUnit;
+    NSDate *today = [NSDate date];
+    NSDateComponents *components = [gregorian components:units fromDate:_startDate toDate:today options:0];
+    NSInteger days = [components day];
+    
+    // Loop through days to fill picker choices.
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:kDateFormat];
-    // TODO: fix this so we have a starting date in plist and populate with dates until present (then add call back by date).
-    NSString *dateString = [dateFormatter stringFromDate:[[NSDate alloc] initWithTimeIntervalSinceNow:0]];
-    [_datePickerChoices addObject:[[NSString alloc] initWithString:dateString]];
-    
+
+    NSLog(@"Calculated %ld days since %@", (long)days, [dateFormatter stringFromDate:_startDate]);
+
+    NSString *dateString = @"";
+    components = [[NSDateComponents alloc]init];
+    for(int i=0; i<=days; i++) {
+        // Get dates from start date to today.
+        int daysToAdd = i - days;
+        NSLog(@"Adding %d days to start date.", daysToAdd);
+        [components setDay:daysToAdd];
+        NSDate *pastDate = [gregorian dateByAddingComponents:components toDate:today options:0];
+
+        // Format and add date to the picker choices.
+        dateString = [dateFormatter stringFromDate:pastDate];
+        [_datePickerChoices addObject:[[NSString alloc] initWithFormat:@"%@", dateString]];
+    }
+
     /**
      * Update the label for default row in picker.
      * -- TODO: eventually make this default to the latest entry in history (and make picker match).
@@ -104,6 +131,9 @@ int        const kDateComponentWidth          = 150;
 - (void)updateLabelForWeight:(int)weightRow andDate:(int)dateRow {
     // Update label ('picker' choice made).
     [_label setText:[[NSString alloc] initWithFormat:@"%@ lbs on %@.", [_weightPickerChoices objectAtIndex:weightRow], [_datePickerChoices objectAtIndex:dateRow]]];
+    
+    // Change color for fun.
+    //_label.textColor = [UIColor colorWithRed:0.0f/255.0f green: 0.0f/255.0f blue:255.0f/255.0f alpha:255.0f/255.0f];
 }
 
 /** ***** UIPickerViewDataSource ***** */
@@ -135,7 +165,21 @@ int        const kDateComponentWidth          = 150;
 
 // Returns the title of each row in the picker.
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return [_weightPickerChoices objectAtIndex:row];
+    NSString *pickerTitle = @"";
+
+    switch (component) {
+        case kWeightPickerComponent:
+            pickerTitle = [_weightPickerChoices objectAtIndex:row];
+            break;
+        case kDatePickerComponent:
+            pickerTitle = [_datePickerChoices objectAtIndex:row];
+            // NSLog(@"Found date picker (title) of %@", pickerTitle);
+            break;
+        default:
+            break;
+    }
+
+    return pickerTitle;
 }
 
 // (Reuse) Returns the title of each row in the picker.
@@ -143,7 +187,7 @@ int        const kDateComponentWidth          = 150;
 //    return [_weightPickerChoices objectAtIndex:row];
 //}
 
-// Acts on picker row selection.
+// Perform these tasks when the picker stops on a value.
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     
     int weightRow = [pickerView selectedRowInComponent:kWeightPickerComponent];
@@ -154,7 +198,6 @@ int        const kDateComponentWidth          = 150;
 
 // Returns width of the column (component related to kNumColsWeightPicker starting at zero).
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
-
     float colWidth = 0;
     
     switch (component) {
@@ -163,6 +206,7 @@ int        const kDateComponentWidth          = 150;
             break;
         case kDatePickerComponent:
             colWidth = 150;
+            break;
         default:
             break;
     }

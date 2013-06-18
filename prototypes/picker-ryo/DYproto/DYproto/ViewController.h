@@ -23,6 +23,7 @@
 @property (strong, nonatomic) NSMutableArray *weightPickerChoices;
 @property (strong, nonatomic) NSMutableArray *dates;
 @property (strong, nonatomic) NSMutableArray *datePickerChoices;
+@property (strong, nonatomic) NSDate *startDate;
 
 -(void)updateLabelForWeight:(int)weightRow andDate:(int)dateRow;
 

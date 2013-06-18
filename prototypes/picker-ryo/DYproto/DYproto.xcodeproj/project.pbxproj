@@ -100,12 +100,12 @@
 			children = (
 				0F776321176E285700CC1CAE /* DYproto-Info.plist */,
 				0F776322176E285700CC1CAE /* InfoPlist.strings */,
+				0F77633E176E484400CC1CAE /* data.plist */,
 				0F776325176E285700CC1CAE /* main.m */,
 				0F776327176E285700CC1CAE /* DYproto-Prefix.pch */,
 				0F77632B176E285700CC1CAE /* Default.png */,
 				0F77632D176E285700CC1CAE /* Default@2x.png */,
 				0F77632F176E285700CC1CAE /* Default-568h@2x.png */,
-				0F77633E176E484400CC1CAE /* data.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
