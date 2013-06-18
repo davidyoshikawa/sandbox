@@ -72,7 +72,7 @@ int        const kDateComponentWidth          = 150;
 
     for (int i=[_minWeight intValue]; i<=[_maxWeight intValue]; i++) {
         [_weightPickerChoices addObject:[[NSString alloc] initWithFormat:@"%d", i]];
-
+        
         if (_weightInTenths) {
             for (int j=1; j<10; j++) {
                 [_weightPickerChoices addObject:[[NSString alloc] initWithFormat:@"%d.%d", i, j]];
@@ -163,24 +163,77 @@ int        const kDateComponentWidth          = 150;
 
 /** ***** UIPickerViewDelegate ***** */
 
-// Returns the title of each row in the picker.
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    NSString *pickerTitle = @"";
+// Returns the view (carrying a UILabel vs NSString) of each row in the picker.
+- (UIView *)pickerView:(UIPickerView *)pickerView
+            viewForRow:(NSInteger)row
+          forComponent:(NSInteger)component
+           reusingView:(UIView *)view {
 
+    UILabel *pickerLabel = (UILabel *)view;
+    
+    if (pickerLabel == nil) {
+        CGRect frame;
+        
+        switch (component) {
+            case kWeightPickerComponent:
+                frame = CGRectMake(0.0, 0.0, 80, 35);
+                break;
+            case kDatePickerComponent:
+                frame = CGRectMake(0.0, 0.0, 120, 35);
+                break;
+            default:
+                break;
+        }
+
+        pickerLabel = [[UILabel alloc] initWithFrame:frame];
+        [pickerLabel setTextAlignment:NSTextAlignmentLeft];
+        [pickerLabel setBackgroundColor:[UIColor clearColor]];
+        [pickerLabel setFont:[UIFont boldSystemFontOfSize:19]];
+    }
+
+    NSString *pickerTitle = @"";
+    BOOL isWeightPickerComponent = NO;
+    
     switch (component) {
         case kWeightPickerComponent:
+            isWeightPickerComponent = YES;
             pickerTitle = [_weightPickerChoices objectAtIndex:row];
             break;
         case kDatePickerComponent:
             pickerTitle = [_datePickerChoices objectAtIndex:row];
-            // NSLog(@"Found date picker (title) of %@", pickerTitle);
             break;
         default:
             break;
     }
+    
+    [pickerLabel setText:pickerTitle];
 
-    return pickerTitle;
+    // Set the weight color to 'red' if it does not have a decimal point (else 'black').
+    [pickerLabel setTextColor:(isWeightPickerComponent && [pickerTitle rangeOfString:@"."].location == NSNotFound) ? [UIColor redColor] : [UIColor blackColor]];
+    
+    return pickerLabel;
 }
+
+// Returns the title of each row in the picker.
+//- (NSString *)pickerView:(UIPickerView *)pickerView
+//             titleForRow:(NSInteger)row
+//            forComponent:(NSInteger)component {
+//    NSString *pickerTitle = @"";
+//
+//    switch (component) {
+//        case kWeightPickerComponent:
+//            pickerTitle = [_weightPickerChoices objectAtIndex:row];
+//            break;
+//        case kDatePickerComponent:
+//            pickerTitle = [_datePickerChoices objectAtIndex:row];
+//            // NSLog(@"Found date picker (title) of %@", pickerTitle);
+//            break;
+//        default:
+//            break;
+//    }
+//
+//    return pickerTitle;
+//}
 
 // (Reuse) Returns the title of each row in the picker.
 //- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
